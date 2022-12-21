@@ -21,6 +21,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt')
 //路由
 const app = express();
+//排程
+const nodeSchedule  = require('node-schedule')
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //跨來源請求
 const cors = require("cors");
@@ -62,6 +64,16 @@ app.get('/getTest',async (req, res) => {
 
 
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//排程 nodeSchedule
+//天氣
+require('./Modules/Schedule/Wheather')()
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//伺服器啟動檢查
+//天氣
+require('./Modules/StartCheck/Weather')()
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+
 //根目錄資料夾
 app.use(express.static("Public"));
 //上傳檔案路徑
