@@ -4,3 +4,5 @@ package-lock.json
 Images
 .env
 *.jpg
+test.js
+class.sql

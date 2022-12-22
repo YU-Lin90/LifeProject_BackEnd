@@ -46,7 +46,11 @@ const loginCheckMiddle = require('./Modules/TokenLoginCheck')
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //會員登入
 app.use('/login',require('./Modules/TokenLogin'))
-
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//天氣資料
+app.use('/weathers',require('./API/Weather/GetAllWeatherData'))
+//天氣資料 會員用
+app.use('/memberWeathers',loginCheckMiddle,require('./API/Weather/MemberGetWeather'))
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //假資料
 app.use('/setFakeData',require('./Modules/FakeDatas'))
