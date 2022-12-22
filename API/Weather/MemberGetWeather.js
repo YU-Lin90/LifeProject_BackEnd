@@ -38,17 +38,36 @@ router.get("/getFavoriteCity", async (req, res) => {
     const getDetailSql = "SELECT `city_name`, `start_time`, `end_time`, `precipitation`, `weather_condition`, `temp_max`, `temp_min`, `feeling_condition`, `city_order` FROM `weather_forecast` WHERE " + baseSql
 
     const [result] = await DB.query(getDetailSql)
-    const timeForm = 'MM月DD日HH時'
+    const timeForm = 'DD日HH時'
     for(let element of result){
       element.start_time = changeTime(element.start_time,timeForm)
       element.end_time = changeTime(element.end_time,timeForm)
     }
-    console.log(result);
-
-
-
+    const firstOrder = result.filter((v) => v.city_order === 1);
+    const secondOrder = result.filter((v) => v.city_order === 2);
+    const thirdOrder = result.filter((v) => v.city_order === 3);
+    // console.log(firstOrder);
+    const firstTimes = {
+      start: firstOrder[0].start_time,
+      end: firstOrder[0].end_time,
+      order:1
+    };
+    const secondTimes = {
+      start: secondOrder[0].start_time,
+      end: secondOrder[0].end_time,
+      order:2
+    };
+    const thirdTimes = {
+      start: thirdOrder[0].start_time,
+      end: thirdOrder[0].end_time,
+      order:3
+    };
+    const datas = {
+      details: [ {},firstOrder, secondOrder, thirdOrder ],
+      timeSets: [ firstTimes, secondTimes, thirdTimes ],
+    };
     output.success=true
-    output.data = result
+    output.data = datas
     return res.json(output)
   } catch (error) {
     console.log(error);
