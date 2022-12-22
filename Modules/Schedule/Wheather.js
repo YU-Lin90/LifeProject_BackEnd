@@ -1,5 +1,3 @@
-const DB = require("../ConnectDataBase");
-const moment = require("moment-timezone");
 const nodeSchedule  = require('node-schedule')
 
 const updateWeatherData = require('../StartCheck/Weather')
@@ -10,7 +8,7 @@ const updateWeatherData = require('../StartCheck/Weather')
 const setSchedule = async ()=>{
   const updateWeatherDataTask1 = '0 30 0 * * *'
   const updateWeatherDataTask2 = '0 30 6 * * *'
-  const updateWeatherDataTask3 = '0 42 12 * * *'
+  const updateWeatherDataTask3 = '0 30 12 * * *'
   const updateWeatherDataTask4 = '0 30 18 * * *'
 
   const updateWeatherData1 = nodeSchedule.scheduleJob(updateWeatherDataTask1,async ()=>{

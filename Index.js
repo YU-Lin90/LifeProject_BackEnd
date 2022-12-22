@@ -21,17 +21,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt')
 //路由
 const app = express();
-//排程
-const nodeSchedule  = require('node-schedule')
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //跨來源請求
 const cors = require("cors");
+const corList =JSON.parse(process.env.CORS_ORIGIN)
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://192.168.1.107:3000",
-    ], //這邊改成他的伺服器(白名單)，有多個的時候用陣列表示
+    origin: corList, //這邊改成他的伺服器(白名單)，有多個的時候用陣列表示
     optionsSuccessStatus: 200,
   })
 );
@@ -45,24 +41,15 @@ app.post(multer().none(), async (req, res) => {
   next();
 });
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//登入檢查 中介程式
+const loginCheckMiddle = require('./Modules/TokenLoginCheck')
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //會員登入
 app.use('/login',require('./Modules/TokenLogin'))
 
-
-
-
-
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //假資料
 app.use('/setFakeData',require('./Modules/FakeDatas'))
-
-app.get('/getTest',async (req, res) => {
-  res.json(1)
-});
-
-
-
-
-
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //排程 nodeSchedule
 //天氣
@@ -70,7 +57,7 @@ require('./Modules/Schedule/Wheather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //伺服器啟動檢查
 //天氣
-require('./Modules/StartCheck/Weather')()
+// require('./Modules/StartCheck/Weather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
 
