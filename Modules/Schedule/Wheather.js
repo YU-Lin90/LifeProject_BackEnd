@@ -28,7 +28,6 @@ const setSchedule = async ()=>{
   const updateWeatherData4 = nodeSchedule.scheduleJob(updateWeatherDataTask4,async ()=>{
     await updateWeatherData()
     console.log('updateWeatherPM1830');
-
   })
 }
 

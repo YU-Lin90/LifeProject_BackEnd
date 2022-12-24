@@ -68,8 +68,9 @@ const checkWeather = async () => {
     //===============================================分隔線================================================
   }
   const upDateTimeSql = "UPDATE `weather_forecast` SET `start_time`=NOW() WHERE `city_order` = 0 AND `sid` = 1"
-  const [result] = await DB.query(upDateTimeSql)
-  console.log(result);
-};
+  const [{affectedRows}] = await DB.query(upDateTimeSql)
+  console.log('更新氣象資訊，現在時間'+ new Date());
+  console.log('資料表更新：'+affectedRows);
+  };
 
 module.exports = checkWeather;

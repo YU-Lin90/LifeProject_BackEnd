@@ -52,6 +52,14 @@ app.use('/weathers',require('./API/Weather/GetAllWeatherData'))
 //天氣資料 會員用
 app.use('/memberWeathers',loginCheckMiddle,require('./API/Weather/MemberGetWeather'))
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//行程表 顯示
+app.use('/getMemberSchedules',loginCheckMiddle,require('./API/Schedules/GetScheduleRender'))
+
+
+
+
+
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //假資料
 app.use('/setFakeData',require('./Modules/FakeDatas'))
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
@@ -61,9 +69,8 @@ require('./Modules/Schedule/Wheather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //伺服器啟動檢查
 //天氣
-// require('./Modules/StartCheck/Weather')()
+require('./Modules/StartCheck/Weather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
-
 
 //根目錄資料夾
 app.use(express.static("Public"));
@@ -75,6 +82,8 @@ app.use("/images", express.static("Images"));
 const port = process.env.SERVER_PORT || 3001;
 //設定監聽port
 const server = app.listen(port, () => {
+  moment.locale('ja')
+  console.log(moment(new Date()).format('LLLL'));
   console.log("路由伺服器啟動，埠號:", port);
   console.log("現在時間:" + new Date());
 });
