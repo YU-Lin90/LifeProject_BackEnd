@@ -56,7 +56,7 @@ app.use('/memberWeathers',loginCheckMiddle,require('./API/Weather/MemberGetWeath
 app.use('/getMemberSchedules',loginCheckMiddle,require('./API/Schedules/GetScheduleRender'))
 
 
-
+app.get('/getPark',require('./Modules/Schedule/ParkingDatas'))
 
 
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
@@ -82,8 +82,8 @@ app.use("/images", express.static("Images"));
 const port = process.env.SERVER_PORT || 3001;
 //設定監聽port
 const server = app.listen(port, () => {
-  moment.locale('ja')
-  console.log(moment(new Date()).format('LLLL'));
+  // moment.locale('ja')
+  // console.log(moment(new Date()).format('LLLL'));
   console.log("路由伺服器啟動，埠號:", port);
   console.log("現在時間:" + new Date());
 });
