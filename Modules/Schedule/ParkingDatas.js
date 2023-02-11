@@ -6,7 +6,7 @@ const axios = require('axios')
 function changeTime(oldTime, form) {
   return moment(oldTime).tz("Asia/Taipei").format(form);
 }
-router.use("/", async (req, res) => {
+router.get("/insertAllData", async (req, res) => {
   const output = {
     success:false,
     errorType:''
@@ -89,14 +89,11 @@ TYPE2: 1:停管處經營 2:非停管處經營
     } */
     
     for(let element of parkList){
-      for (let keyName in element){
-        const searchSql = "SELECT * FROM `getallkeys` WHERE `keyName` = ?"
-        const [searchResult] = await DB.query(searchSql,keyName)
-        if(searchResult&&searchResult.length===0){
-          const insertSql = "INSERT INTO `getallkeys`(`keyName`) VALUES (?)"
-          const res = await DB.query(insertSql,keyName)
-        }
-      }
+      const {id,area,name,type,serviceTime,summary,address,tel,payex,totalcar,totalmotor,totalbike} = element
+      const insertData = [id,area,name,type,serviceTime,summary,address,tel,payex,totalcar,totalmotor,totalbike]
+      const insertSql = "INSERT INTO `parking_info`( `id`, `area`, `name`, `type`, `serviceTime`, `summary`, `address`, `tel`, `payex`, `totalcar`, `totalmotor`, `totalbike`) VALUES (?,?,?,?,?,? ,?,?,?,?,?,?)"
+      const [result] = await DB.query(insertSql,insertData)
+      // console.log(result);
     }
     // console.log(data);
     return res.json(1)
@@ -112,6 +109,26 @@ TYPE2: 1:停管處經營 2:非停管處經營
     console.log(error);
     return res.json(output)
   }
+})
+
+router.get("/updateLatLng", async (req, res) => {
+  const sql = "SELECT `id`,`address` FROM `parking_info` WHERE `sid` >= 1100 "
+  const [result] = await DB.query(sql)
+  res.json(result)
+})
+
+router.post("/insertLatLng", async (req, res) => {
+  const datas = req.body
+  const updateSql = "UPDATE `parking_info` SET `lat`=?,`lng`=? WHERE `id`=?"
+  
+  for (const element of datas) {
+    const {lat,lng,id}=element
+    const insertData = [lat,lng,id]
+    const [result] = await DB.query(updateSql,insertData)
+    // console.log(result);
+  }
+  console.log('end');
+  res.json(1)
 })
 
 module.exports = router;

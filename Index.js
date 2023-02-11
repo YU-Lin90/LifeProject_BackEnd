@@ -56,8 +56,12 @@ app.use('/memberWeathers',loginCheckMiddle,require('./API/Weather/MemberGetWeath
 app.use('/getMemberSchedules',loginCheckMiddle,require('./API/Schedules/GetScheduleRender'))
 
 
-app.get('/getPark',require('./Modules/Schedule/ParkingDatas'))
+app.use('/getPark',require('./Modules/Schedule/ParkingDatas'))
 
+app.use('/getNearPark',require('./API/Parking/NearPark'))
+//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+//計數器
+app.use('/memberCounts',loginCheckMiddle,require('./API/Counts/Count'))
 
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //假資料
@@ -69,7 +73,7 @@ require('./Modules/Schedule/Wheather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 //伺服器啟動檢查
 //天氣
-require('./Modules/StartCheck/Weather')()
+// require('./Modules/StartCheck/Weather')()
 //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
 //根目錄資料夾
